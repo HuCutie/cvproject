@@ -31,7 +31,7 @@ parser.add_argument('--lr', '--learning-rate', default=0.05, type=float, metavar
                     help='initial learning rate')
 parser.add_argument('--lr-type', default='step', type=str, metavar='LR',
                     help='different learning rate schedule(default:step)')
-parser.add_argument('--epochs', default=300, type=int, metavar='N',
+parser.add_argument('--epochs', default=500, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--milestones', default=[100, 140], type=int, nargs='+',
                     help='milestones for MultiStepLR')
