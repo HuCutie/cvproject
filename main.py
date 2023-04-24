@@ -11,6 +11,8 @@ from utils.mixup import *
 from model_params_flops import *
 from torch.autograd import Variable
 
+from torch.utils.tensorboard import SummaryWriter
+
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 parser = argparse.ArgumentParser(description='PyTorch Cross Domain Training')
@@ -52,6 +54,7 @@ parser.add_argument('--cuda', default=torch.cuda.is_available(), type=bool, help
 best_prec1 = 0
 
 def main():
+    tb_writer = SummaryWriter()
     global args, best_prec1
     args = parser.parse_args()
     args.start_epoch = 0
@@ -133,9 +136,13 @@ def main():
         print('learning rate:{}'.format(optimizer.param_groups[0]['lr']))
         # train for one epoch
         trainObj, top1, top5 = train(train_loader, model, criterion, optimizer, epoch)
+        tb_writer.add_scalar('train_loss', trainObj, epoch)
 
         # evaluate on validation set
         valObj, prec1, prec5 = validate(val_loader, model, criterion)
+        tb_writer.add_scalar('validation_loss', valObj, epoch)
+        tb_writer.add_scalar('Prec@1', prec1, epoch)
+        tb_writer.add_scalar('Prec@5', prec5, epoch)
 
         # update stats
         stats_._update(trainObj, top1, top5, valObj, prec1, prec5)
