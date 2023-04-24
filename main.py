@@ -103,11 +103,10 @@ def main():
     # define optimizer
     if args.optimizer == 'SGD':
         optimizer = torch.optim.SGD(model.parameters(), args.lr, momentum=0.9, weight_decay=5e-4)
-    elif args.optimizer == 'custom':
-        """
-            You can achieve your own optimizer here
-        """
-        pass
+    elif args.optimizer == 'RMSprop':
+        optimizer = torch.optim.RMSprop(model.parameters(), lr=0.01, alpha=0.99, eps=1e-08, weight_decay=0, momentum=0, centered=False)
+    elif args.optimizer == 'Adam':
+        optimizer = torch.optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
     else:
         raise KeyError('optimization method {} is not achieved')
 
