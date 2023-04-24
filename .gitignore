@@ -1,3 +1,5 @@
 Results/*
 data/*
+__pycache/*
 model/__pycache/*
+utils/__pycache/*
