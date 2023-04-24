@@ -3,6 +3,9 @@ from torchvision.transforms import functional as F
 import numbers
 import torch
 
+from utils.cutmix import CutMix
+from utils.cutout import CutOut
+
 normalize = transforms.Normalize(mean=[0.484, 0.460, 0.411],
                                  std=[0.260, 0.253, 0.271])
 
@@ -11,6 +14,7 @@ def transforms_train_val():
         You can modify the train_transforms to try different image preprocessing methods when training model
     """
     train_transforms = transforms.Compose([
+        transforms.RandAugment(2, 9),
         transforms.RandomResizedCrop(84),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
